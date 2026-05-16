@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404cat — Rankings</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:     #08080f;
+      --bg2:    #0f0f1a;
+      --bg3:    #13131f;
+      --pink:   #ff2d78;
+      --lime:   #b6ff00;
+      --cyan:   #00f0ff;
+      --yellow: #ffe600;
+      --white:  #f0e6ff;
+      --pixel:  'Press Start 2P', monospace;
+      --vt:     'VT323', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--white);
+      font-family: var(--vt);
+      font-size: 20px;
+      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text y='28' font-size='28'>🐾</text></svg>") 16 16, auto;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.08) 2px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      background: var(--lime);
+      padding: 6px 0;
+      border-bottom: 3px solid var(--cyan);
+      border-top: 3px solid var(--cyan);
+    }
+    .marquee-wrap marquee {
+      font-family: var(--pixel);
+      font-size: 10px;
+      color: #000;
+      letter-spacing: 1px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--bg2);
+      border-bottom: 3px solid var(--cyan);
+      padding: 14px 30px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    nav .logo {
+      font-family: var(--pixel);
+      font-size: 13px;
+      color: var(--pink);
+      text-shadow: 2px 2px 0 var(--lime);
+      text-decoration: none;
+      margin-right: auto;
+    }
+    nav a {
+      font-family: var(--pixel);
+      font-size: 9px;
+      color: var(--cyan);
+      text-decoration: none;
+      border: 2px solid var(--cyan);
+      padding: 6px 12px;
+      transition: all 0.1s;
+    }
+    nav a:hover { background: var(--cyan); color: #000; }
+    nav a.active { background: var(--pink); border-color: var(--pink); color: #000; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      text-align: center;
+      padding: 50px 20px 30px;
+      border-bottom: 3px dashed var(--lime);
+    }
+    .page-header h1 {
+      font-family: var(--pixel);
+      font-size: clamp(14px, 3.5vw, 28px);
+      color: var(--lime);
+      text-shadow: 3px 3px 0 var(--cyan), 6px 6px 0 rgba(182,255,0,0.2);
+      line-height: 1.6;
+    }
+    .page-header p {
+      font-family: var(--vt);
+      font-size: 24px;
+      color: var(--pink);
+      margin-top: 14px;
+      letter-spacing: 2px;
+    }
+    .page-header .disclaimer {
+      display: inline-block;
+      margin-top: 16px;
+      font-family: var(--pixel);
+      font-size: 7px;
+      color: var(--yellow);
+      border: 2px dashed var(--yellow);
+      padding: 8px 16px;
+      line-height: 2;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-family: var(--pixel);
+      font-size: 10px;
+      color: var(--lime);
+      text-align: center;
+      padding: 40px 20px 6px;
+      letter-spacing: 3px;
+    }
+    .divider {
+      text-align: center;
+      color: var(--cyan);
+      font-size: 16px;
+      letter-spacing: 6px;
+      margin: 6px 0 28px;
+    }
+
+    /* ── MAIN RANKINGS TABLE ── */
+    .table-wrap {
+      overflow-x: auto;
+      padding: 0 20px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--vt);
+      font-size: 20px;
+    }
+
+    thead tr {
+      background: var(--pink);
+      color: #000;
+    }
+    thead th {
+      font-family: var(--pixel);
+      font-size: 8px;
+      padding: 14px 16px;
+      border: 3px solid #000;
+      letter-spacing: 1px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      background: var(--bg3);
+      transition: background 0.1s;
+    }
+    tbody tr:nth-child(even) { background: var(--bg2); }
+    tbody tr:hover { background: #1a1a2e; }
+
+    /* gold silver bronze */
+    tbody tr:nth-child(1) { border-left: 6px solid var(--yellow); }
+    tbody tr:nth-child(2) { border-left: 6px solid #c0c0c0; }
+    tbody tr:nth-child(3) { border-left: 6px solid #cd7f32; }
+
+    tbody td {
+      padding: 14px 16px;
+      border: 2px solid #1e1e30;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 1.4;
+    }
+
+    .rank-num {
+      font-family: var(--pixel);
+      font-size: 13px;
+      color: var(--yellow);
+    }
+    tbody tr:nth-child(2) .rank-num { color: #c0c0c0; }
+    tbody tr:nth-child(3) .rank-num { color: #cd7f32; }
+
+    .cat-name-cell {
+      font-family: var(--pixel);
+      font-size: 8px;
+      color: var(--lime);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .power-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+    .power-bar {
+      height: 14px;
+      background: var(--pink);
+      border: 2px solid var(--lime);
+      display: inline-block;
+      min-width: 10px;
+    }
+    .power-bar.cyan { background: var(--cyan); }
+    .power-bar.lime { background: var(--lime); }
+    .power-bar.yellow { background: var(--yellow); }
+    .power-bar.grey { background: #888; }
+
+    .power-num {
+      font-family: var(--pixel);
+      font-size: 8px;
+      color: var(--white);
+      white-space: nowrap;
+    }
+
+    .threat-badge {
+      font-family: var(--pixel);
+      font-size: 7px;
+      padding: 4px 8px;
+      border: 2px solid #000;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .threat-extreme  { background: var(--pink);   color: #000; }
+    .threat-blinding { background: var(--cyan);   color: #000; }
+    .threat-antisalad{ background: var(--lime);   color: #000; }
+    .threat-hungry   { background: var(--yellow); color: #000; }
+    .threat-musical  { background: #9b59b6;       color: #fff; }
+    .threat-void     { background: #222;          color: var(--cyan); border-color: var(--cyan); }
+    .threat-loaf     { background: #8B4513;       color: #fff; }
+    .threat-judge    { background: #333;          color: var(--pink); border-color: var(--pink); }
+
+    .vibe-cell {
+      font-family: var(--vt);
+      font-size: 18px;
+      color: var(--white);
+      text-align: left;
+      max-width: 200px;
+    }
+
+    /* ── STAT CARDS ── */
+    .stat-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .stat-card {
+      background: var(--bg3);
+      border: 3px solid var(--pink);
+      box-shadow: 5px 5px 0 var(--lime);
+      padding: 20px;
+      width: 220px;
+      text-align: center;
+    }
+    .stat-card:nth-child(2n) { border-color: var(--cyan); box-shadow: 5px 5px 0 var(--pink); }
+    .stat-card:nth-child(3n) { border-color: var(--lime); box-shadow: 5px 5px 0 var(--cyan); }
+
+    .stat-card .stat-title {
+      font-family: var(--pixel);
+      font-size: 7px;
+      color: var(--lime);
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      line-height: 1.8;
+    }
+    .stat-card .stat-value {
+      font-family: var(--pixel);
+      font-size: 18px;
+      color: var(--yellow);
+      margin-bottom: 6px;
+    }
+    .stat-card .stat-sub {
+      font-family: var(--vt);
+      font-size: 18px;
+      color: var(--white);
+      opacity: 0.7;
+    }
+
+    /* ── CRITERIA TABLE ── */
+    .criteria-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
+      overflow-x: auto;
+    }
+    .criteria-wrap table {
+      width: 100%;
+    }
+    .criteria-wrap thead tr { background: var(--cyan); }
+    .criteria-wrap thead th { color: #000; }
+
+    /* ── POLL FORM ── */
+    .poll-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+    .poll-box {
+      background: var(--bg3);
+      border: 3px solid var(--yellow);
+      box-shadow: 6px 6px 0 var(--pink);
+      padding: 30px;
+    }
+    .poll-box h3 {
+      font-family: var(--pixel);
+      font-size: 10px;
+      color: var(--yellow);
+      margin-bottom: 20px;
+      line-height: 1.8;
+      letter-spacing: 1px;
+    }
+    .poll-box label {
+      display: block;
+      font-family: var(--vt);
+      font-size: 20px;
+      color: var(--white);
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+    .poll-box label:hover { color: var(--lime); }
+    .poll-box input[type="radio"] { accent-color: var(--pink); margin-right: 10px; transform: scale(1.3); }
+    .poll-box .submit-btn {
+      margin-top: 20px;
+      background: var(--pink);
+      color: #000;
+      font-family: var(--pixel);
+      font-size: 8px;
+      border: 3px solid #000;
+      padding: 10px 20px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 var(--lime);
+      transition: transform 0.1s, box-shadow 0.1s;
+      display: block;
+    }
+    .poll-box .submit-btn:hover {
+      transform: translate(-2px,-2px);
+      box-shadow: 6px 6px 0 var(--lime);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg2);
+      border-top: 4px solid var(--pink);
+      text-align: center;
+      padding: 30px 20px;
+      font-family: var(--pixel);
+      font-size: 8px;
+      color: var(--white);
+      line-height: 2.5;
+    }
+    footer .footer-cats { font-size: 28px; display: block; margin-bottom: 10px; letter-spacing: 6px; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { color: var(--pink); }
+  </style>
+</head>
+
+<body>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <marquee behavior="scroll" direction="left" scrollamount="8">
+      🏆 OFFICIAL RANKINGS LOADING ✦ VERY SCIENTIFIC ✦ ZERO BIAS ✦ (COMPLETE BIAS) ✦ DO NOT QUESTION THE DATA ✦ THE CATS APPROVED THIS ✦ GRUMPY CAT IS WATCHING ✦ 🏆 OFFICIAL RANKINGS LOADING ✦
+    </marquee>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="logo">🐱 404cat</a>
+    <a href="index.html">HOME</a>
+    <a href="gallery.html">GALLERY</a>
+    <a href="rankings.html" class="active">RANKINGS</a>
+    <a href="about.html">ABOUT</a>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <h1>░▒▓ POWER RANKINGS ▓▒░</h1>
+    <p>✦ official. definitive. completely made up. ✦</p>
+    <span class="disclaimer">
+      ⚠ DISCLAIMER: rankings conducted by a panel of zero experts ⚠<br />
+      methodology: vibes. threat level: assessed by feeling. power: estimated.
+    </span>
+  </header>
+
+  <!-- MAIN TABLE -->
+  <p class="section-label">✦ THE DEFINITIVE LEADERBOARD ✦</p>
+  <div class="divider">░░░░░░░░░░░░░░░░░░░░</div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>RANK</th>
+          <th>CAT</th>
+          <th>VIRAL YEAR</th>
+          <th>POWER LEVEL</th>
+          <th>VIBE</th>
+          <th>THREAT LEVEL</th>
+          <th>STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="rank-num">🥇 #1</span></td>
+          <td class="cat-name-cell">GRUMPY CAT</td>
+          <td>2012</td>
+          <td>
+            <div class="power-bar-wrap">
+              <span class="power-bar" style="width:140px;"></span>
+              <span class="power-num">9999/10</span>
+            </div>
+          </td>
+          <td class="vibe-cell">Perpetually disappointed. At peace with it.</td>
+          <td><span class="threat-badge threat-extreme">☠ EXTREME</span></td>
+          <td>LEGEND</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">🥈 #2</span></td>
+          <td class="cat-name-cell">NYAN CAT</td>
+          <td>2011</td>
+          <td>
+            <div class="power-bar-wrap">
+              <span class="power-bar cyan" style="width:126px;"></span>
+              <span class="power-num">8500/10</span>
+            </div>
+          </td>
+          <td class="vibe-cell">Chaotic good. Rainbow energy. No brakes.</td>
+          <td><span class="threat-badge threat-blinding">BLINDING</span></td>
+          <td>ACTIVE</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">🥉 #3</span></td>
+          <td class="cat-name-cell">SMUDGE</td>
+          <td>2019</td>
+          <td>
+            <div class="power-bar-wrap">
+              <span class="power-bar lime" style="width:120px;"></span>
+              <span class="power-num">8000/10</span>
+            </div>
+          </td>
+          <td class="vibe-cell">Refuses vegetables. On principle. Always.</td>
+          <td><span class="threat-badge threat-antisalad">ANTI-SALAD</span></td>
+          <td>OFFENDED</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">#4</span></td>
+          <td class="cat-name-cell">LOLCAT OG</td>
+          <td>2007</td>
+          <td>
+            <div class="power-bar-wrap">
+              <span class="power-bar yellow" style="width:105px;"></span>
+              <span class="power-num">7000/10</span>
+            </div>
+          </td>
+          <td class="vibe-cell">The founding father. Still hungry. Always.</td>
+          <td><span class="threat-badge threat-hungry">HUNGRY</span></td>
+          <td>OG</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">#5</span></td>
+          <td class="cat-name-cell">KEYBOARD CAT</td>
+          <td>2009</td>
+          <td>
+            <div class="power-bar-wrap">
+              <span class="power-bar" style="width:98px; background:#9b59b6;"></span>
+              <span class="power-num">6500/10</span>
+            </div>
+          </td>
+          <td class="vibe-cell">Musical genius. No formal training. Tiny shirt.</td>
+          <td><span class="threat-badge threat-musical">🎹 HARMLESS</span></td>
+          <td>🎵 PERFORMING</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">#6</span></td>
+          <td class="cat-name-cell">VOID CAT</td>
+          <td>2020</td>
+          <td>
+            <div class="power-bar-wrap">
+              <span class="power-bar grey" style="width:90px;"></span>
+              <span class="power-num">6000/10</span>
+            </div>
+          </td>
+          <td class="vibe-cell">One with the darkness. Stares. Judges silently.</td>
+          <td><span class="threat-badge threat-void">🌑 UNKNOWABLE</span></td>
+          <td>🕳 IN THE VOID</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">#7</span></td>
+          <td class="cat-name-cell">LOAF CAT</td>
+          <td>2016</td>
+          <td>
+            <div class="power-bar-wrap">
+              <span class="power-bar" style="width:75px; background:#8B4513;"></span>
+              <span class="power-num">5000/10</span>
+            </div>
+          </td>
+          <td class="vibe-cell">No limbs visible. Perfect rectangle. Bread unit.</td>
+          <td><span class="threat-badge threat-loaf">LOAFING</span></td>
+          <td>LOAFING</td>
+        </tr>
+        <tr>
+          <td><span class="rank-num">#8</span></td>
+          <td class="cat-name-cell">JUDGEMENTAL CAT</td>
+          <td>2021</td>
+          <td>
+            <div class="power-bar-wrap">
+              <span class="power-bar" style="width:60px; background:#444;"></span>
+              <span class="power-num">4000/10</span>
+            </div>
+          </td>
+          <td class="vibe-cell">Knows your browser history. Says nothing. Worse.</td>
+          <td><span class="threat-badge threat-judge">OMNISCIENT</span></td>
+          <td>WATCHING</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- STAT CARDS -->
+  <p class="section-label">✦ BY THE NUMBERS ✦</p>
+  <div class="divider">░░░░░░░░░░░░░░░░░░░░</div>
+
+  <div class="stat-section">
+    <div class="stat-card">
+      <p class="stat-title">MOST POWERFUL CAT</p>
+      <p class="stat-value">9999</p>
+      <p class="stat-sub">Grumpy Cat. Obviously.</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-title">OLDEST MEME IN ARCHIVE</p>
+      <p class="stat-value">2007</p>
+      <p class="stat-sub">LOLcat OG. Still hungry.</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-title">CATS RANKED</p>
+      <p class="stat-value">8</p>
+      <p class="stat-sub">Many more unranked. They know who they are.</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-title">THREAT LEVELS ASSESSED</p>
+      <p class="stat-value">8</p>
+      <p class="stat-sub">All vibes. Zero methodology.</p>
+    </div>
+  </div>
+
+  <!-- RANKING CRITERIA TABLE -->
+  <p class="section-label" style="padding-top:50px;">✦ HOW WE RANKED THEM ✦</p>
+  <div class="divider">░░░░░░░░░░░░░░░░░░░░</div>
+
+  <div class="criteria-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>CRITERIA</th>
+          <th>WEIGHT</th>
+          <th>MEASURED BY</th>
+          <th>NOTES</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cat-name-cell">Vibe Consistency</td>
+          <td>40%</td>
+          <td class="vibe-cell">Pure feeling</td>
+          <td class="vibe-cell">Does the cat stay on brand at all times</td>
+        </tr>
+        <tr>
+          <td class="cat-name-cell">Cultural Impact</td>
+          <td>30%</td>
+          <td class="vibe-cell">Number of spin-offs</td>
+          <td class="vibe-cell">Merch, movies, NFTs all count</td>
+        </tr>
+        <tr>
+          <td class="cat-name-cell">Threat Energy</td>
+          <td>20%</td>
+          <td class="vibe-cell">Gut instinct</td>
+          <td class="vibe-cell">Would you cross this cat? No.</td>
+        </tr>
+        <tr>
+          <td class="cat-name-cell">Longevity</td>
+          <td>10%</td>
+          <td class="vibe-cell">Years still relevant</td>
+          <td class="vibe-cell">Still being memed = still powerful</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- POLL -->
+  <p class="section-label" style="padding-top:10px;">✦ CAST YOUR VOTE ✦</p>
+  <div class="divider">░░░░░░░░░░░░░░░░░░░░</div>
+
+  <div class="poll-wrap">
+    <div class="poll-box">
+      <h3>WHO SHOULD BE #1?<br />(the cats will see your answer)</h3>
+      <label><input type="radio" name="vote" value="grumpy" /> Grumpy Cat — she earned it</label>
+      <label><input type="radio" name="vote" value="nyan" /> Nyan Cat — rainbow supremacy</label>
+      <label><input type="radio" name="vote" value="smudge" /> Smudge — the salad did him dirty</label>
+      <label><input type="radio" name="vote" value="lolcat" /> LOLcat — respect your elders</label>
+      <label><input type="radio" name="vote" value="void" /> Void Cat — the void has no rank. it simply is.</label>
+      <button class="submit-btn" type="button">SUBMIT VOTE (changes nothing)</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-cats">🐱 🐾 🐱 🐾 🐱</span>
+    404cat — the official unhinged cat meme archive<br />
+    made with zero sleep &amp; too much free time<br />
+    <a href="index.html">home</a> &nbsp;✦&nbsp;
+    <a href="gallery.html">gallery</a> &nbsp;✦&nbsp;
+    <a href="about.html">about</a><br /><br />
+    "no cats were harmed. several humans lost their minds."<br />
+    © 2026 — all rights reserved by the cats. you own nothing.
+  </footer>
+
+</body>
+</html>

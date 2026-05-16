@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404cat — About</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:     #08080f;
+      --bg2:    #0f0f1a;
+      --bg3:    #13131f;
+      --pink:   #ff2d78;
+      --lime:   #b6ff00;
+      --cyan:   #00f0ff;
+      --yellow: #ffe600;
+      --white:  #f0e6ff;
+      --pixel:  'Press Start 2P', monospace;
+      --vt:     'VT323', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--white);
+      font-family: var(--vt);
+      font-size: 20px;
+      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text y='28' font-size='28'>🐾</text></svg>") 16 16, auto;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.08) 2px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      background: var(--yellow);
+      padding: 6px 0;
+      border-bottom: 3px solid var(--pink);
+      border-top: 3px solid var(--pink);
+    }
+    .marquee-wrap marquee {
+      font-family: var(--pixel);
+      font-size: 10px;
+      color: #000;
+      letter-spacing: 1px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--bg2);
+      border-bottom: 3px solid var(--cyan);
+      padding: 14px 30px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    nav .logo {
+      font-family: var(--pixel);
+      font-size: 13px;
+      color: var(--pink);
+      text-shadow: 2px 2px 0 var(--lime);
+      text-decoration: none;
+      margin-right: auto;
+    }
+    nav a {
+      font-family: var(--pixel);
+      font-size: 9px;
+      color: var(--cyan);
+      text-decoration: none;
+      border: 2px solid var(--cyan);
+      padding: 6px 12px;
+      transition: all 0.1s;
+    }
+    nav a:hover { background: var(--cyan); color: #000; }
+    nav a.active { background: var(--pink); border-color: var(--pink); color: #000; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      text-align: center;
+      padding: 50px 20px 30px;
+      border-bottom: 3px dashed var(--yellow);
+    }
+    .page-header h1 {
+      font-family: var(--pixel);
+      font-size: clamp(14px, 3.5vw, 28px);
+      color: var(--yellow);
+      text-shadow: 3px 3px 0 var(--pink), 6px 6px 0 rgba(255,230,0,0.2);
+      line-height: 1.6;
+    }
+    .page-header p {
+      font-family: var(--vt);
+      font-size: 24px;
+      color: var(--cyan);
+      margin-top: 14px;
+      letter-spacing: 2px;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-family: var(--pixel);
+      font-size: 10px;
+      color: var(--yellow);
+      text-align: center;
+      padding: 44px 20px 6px;
+      letter-spacing: 3px;
+    }
+    .divider {
+      text-align: center;
+      color: var(--pink);
+      font-size: 16px;
+      letter-spacing: 6px;
+      margin: 6px 0 30px;
+    }
+
+    /* ── CONTENT WRAP ── */
+    .content {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── ORIGIN STORY ── */
+    .origin-box {
+      background: var(--bg3);
+      border: 3px solid var(--yellow);
+      box-shadow: 6px 6px 0 var(--pink);
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+    .origin-box p {
+      font-family: var(--vt);
+      font-size: 22px;
+      line-height: 1.7;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+    .origin-box p:last-child { margin-bottom: 0; }
+    .origin-box strong { color: var(--lime); }
+    .origin-box em { color: var(--yellow); font-style: normal; }
+
+    /* ── MISSION STATEMENT ── */
+    .mission-box {
+      background: var(--bg2);
+      border-left: 6px solid var(--pink);
+      padding: 24px 30px;
+      margin-bottom: 30px;
+    }
+    .mission-box blockquote {
+      font-family: var(--vt);
+      font-size: 26px;
+      color: var(--pink);
+      line-height: 1.6;
+      font-style: normal;
+    }
+    .mission-box cite {
+      display: block;
+      font-family: var(--pixel);
+      font-size: 7px;
+      color: var(--lime);
+      margin-top: 12px;
+      font-style: normal;
+    }
+
+    /* ── TEAM TABLE ── */
+    .team-wrap {
+      overflow-x: auto;
+      margin-bottom: 10px;
+    }
+    .team-wrap table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--vt);
+      font-size: 20px;
+    }
+    .team-wrap thead tr { background: var(--pink); }
+    .team-wrap thead th {
+      font-family: var(--pixel);
+      font-size: 8px;
+      color: #000;
+      padding: 12px 16px;
+      border: 3px solid #000;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .team-wrap tbody tr { background: var(--bg3); }
+    .team-wrap tbody tr:nth-child(even) { background: var(--bg2); }
+    .team-wrap tbody tr:hover { background: #1a1a2e; }
+    .team-wrap tbody td {
+      padding: 12px 16px;
+      border: 2px solid #1e1e30;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 1.5;
+    }
+    .team-name {
+      font-family: var(--pixel);
+      font-size: 8px;
+      color: var(--lime);
+    }
+    .team-role { color: var(--cyan); }
+    .team-status { color: var(--yellow); }
+    .team-note { color: var(--white); opacity: 0.8; text-align: left; }
+
+    /* ── FAQ ── */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+    .faq-list details {
+      background: var(--bg3);
+      border: 2px solid var(--cyan);
+      box-shadow: 4px 4px 0 var(--pink);
+      padding: 16px 20px;
+    }
+    .faq-list details summary {
+      font-family: var(--pixel);
+      font-size: 8px;
+      color: var(--cyan);
+      cursor: pointer;
+      list-style: none;
+      letter-spacing: 1px;
+      line-height: 1.8;
+    }
+    .faq-list details summary::before { content: '▶ '; color: var(--pink); }
+    .faq-list details[open] summary::before { content: '▼ '; }
+    .faq-list details summary:hover { color: var(--lime); }
+    .faq-list details p {
+      font-family: var(--vt);
+      font-size: 21px;
+      color: var(--white);
+      margin-top: 14px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+    .faq-list details p strong { color: var(--lime); }
+
+    /* ── FUN FACTS LIST ── */
+    .facts-box {
+      background: var(--bg3);
+      border: 3px solid var(--lime);
+      box-shadow: 6px 6px 0 var(--cyan);
+      padding: 28px 30px;
+      margin-bottom: 10px;
+    }
+    .facts-box h3 {
+      font-family: var(--pixel);
+      font-size: 9px;
+      color: var(--lime);
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+    .facts-box ol {
+      padding-left: 28px;
+      line-height: 1;
+    }
+    .facts-box ol li {
+      font-family: var(--vt);
+      font-size: 21px;
+      color: var(--white);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+    .facts-box ol li::marker { color: var(--pink); font-family: var(--pixel); font-size: 12px; }
+    .facts-box ol li strong { color: var(--yellow); }
+
+    /* ── GUESTBOOK FORM ── */
+    .guestbook {
+      background: var(--bg3);
+      border: 3px solid var(--pink);
+      box-shadow: 6px 6px 0 var(--lime);
+      padding: 30px;
+      margin-bottom: 10px;
+    }
+    .guestbook h3 {
+      font-family: var(--pixel);
+      font-size: 9px;
+      color: var(--pink);
+      margin-bottom: 6px;
+      letter-spacing: 2px;
+      line-height: 1.8;
+    }
+    .guestbook p.sub {
+      font-family: var(--vt);
+      font-size: 19px;
+      color: var(--white);
+      opacity: 0.7;
+      margin-bottom: 20px;
+    }
+    .guestbook label {
+      display: block;
+      font-family: var(--pixel);
+      font-size: 7px;
+      color: var(--lime);
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+    .guestbook input[type="text"],
+    .guestbook textarea,
+    .guestbook select {
+      width: 100%;
+      background: var(--bg2);
+      border: 2px solid var(--cyan);
+      color: var(--white);
+      font-family: var(--vt);
+      font-size: 20px;
+      padding: 10px 12px;
+      margin-bottom: 18px;
+      outline: none;
+    }
+    .guestbook input[type="text"]:focus,
+    .guestbook textarea:focus,
+    .guestbook select:focus { border-color: var(--pink); }
+    .guestbook select option { background: var(--bg2); }
+    .guestbook textarea { resize: vertical; min-height: 90px; }
+    .guestbook .submit-btn {
+      background: var(--pink);
+      color: #000;
+      font-family: var(--pixel);
+      font-size: 8px;
+      border: 3px solid #000;
+      padding: 12px 24px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 var(--lime);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .guestbook .submit-btn:hover {
+      transform: translate(-2px,-2px);
+      box-shadow: 6px 6px 0 var(--lime);
+    }
+
+    /* ── FINAL NOTE ── */
+    .final-note {
+      text-align: center;
+      padding: 20px;
+      margin-bottom: 10px;
+    }
+    .final-note p {
+      font-family: var(--vt);
+      font-size: 22px;
+      color: var(--white);
+      opacity: 0.6;
+      line-height: 1.8;
+    }
+    .final-note .big {
+      font-family: var(--pixel);
+      font-size: 10px;
+      color: var(--pink);
+      display: block;
+      margin-bottom: 10px;
+      opacity: 1;
+      animation: blink 2s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg2);
+      border-top: 4px solid var(--pink);
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 60px;
+      font-family: var(--pixel);
+      font-size: 8px;
+      color: var(--white);
+      line-height: 2.5;
+    }
+    footer .footer-cats { font-size: 28px; display: block; margin-bottom: 10px; letter-spacing: 6px; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { color: var(--pink); }
+  </style>
+</head>
+
+<body>
+
+  <div class="marquee-wrap">
+    <marquee behavior="scroll" direction="left" scrollamount="5">
+      ✦ YOU FOUND THE ABOUT PAGE ✦ CONGRATULATIONS ✦ HERE IS YOUR PRIZE: NOTHING ✦ BUT ALSO CAT LORE ✦ SIGN THE GUESTBOOK ✦ THE CATS ARE READING IT ✦ YES ALL OF THEM ✦ EVEN GRUMPY CAT ✦ ESPECIALLY GRUMPY CAT ✦
+    </marquee>
+  </div>
+
+  <nav>
+    <a href="index.html" class="logo">🐱 404cat</a>
+    <a href="index.html">HOME</a>
+    <a href="gallery.html">GALLERY</a>
+    <a href="rankings.html">RANKINGS</a>
+    <a href="about.html" class="active">ABOUT</a>
+  </nav>
+
+  <header class="page-header">
+    <h1>░▒▓ ABOUT 404CAT ▓▒░</h1>
+    <p>✦ the story nobody asked for. here it is anyway. ✦</p>
+  </header>
+
+  <p class="section-label">✦ THE ORIGIN STORY ✦</p>
+  <div class="divider">░░░░░░░░░░░░░░░░░░░░</div>
+
+  <div class="content">
+    <div class="origin-box">
+      <p>It was <strong>a perfectly normal day</strong> when someone decided the internet did not have enough cat meme documentation. <em>They were right.</em></p>
+      <p>404cat was born from a simple belief: <strong>every legendary cat deserves a proper archive.</strong> A place of record. A monument. A slightly unhinged webpage with pixel fonts and neon colours.</p>
+      <p>This is not a joke. This is <strong>history.</strong> Chaotic, unhinged, completely made-up history. But history nonetheless.</p>
+      <p>The cats did not consent to being archived. <em>We did it anyway.</em> They would have wanted it this way. Probably.</p>
+    </div>
+
+    <div class="mission-box">
+      <blockquote>
+        "To document, celebrate, and dramatically over-analyse every cat meme that has ever graced this earth — with zero academic rigour and maximum unhinged energy."
+      </blockquote>
+      <cite>— 404cat Official Mission Statement, written at 2am, unrevised</cite>
+    </div>
+  </div>
+
+  <p class="section-label">✦ THE TEAM ✦</p>
+  <div class="divider">░░░░░░░░░░░░░░░░░░░░</div>
+
+  <div class="content">
+    <div class="team-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>ROLE</th>
+            <th>STATUS</th>
+            <th>NOTES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="team-name">THE FOUNDER</td>
+            <td class="team-role">Chief Cat Officer</td>
+            <td class="team-status">Barely online</td>
+            <td class="team-note">Built this whole thing. Regrets nothing. Sleeps 3hrs a night.</td>
+          </tr>
+          <tr>
+            <td class="team-name">GRUMPY CAT</td>
+            <td class="team-role">Head of Morale</td>
+            <td class="team-status">Legendary</td>
+            <td class="team-note">Does not boost morale. That is the point.</td>
+          </tr>
+          <tr>
+            <td class="team-name">NYAN CAT</td>
+            <td class="team-role">Vibe Director</td>
+            <td class="team-status">Always flying</td>
+            <td class="team-note">Unreachable. Somewhere in space. Left no contact info.</td>
+          </tr>
+          <tr>
+            <td class="team-name">SMUDGE</td>
+            <td class="team-role">Head of Catering</td>
+            <td class="team-status">Offended</td>
+            <td class="team-note">Refused to review the menu. Called it a salad. Walked out.</td>
+          </tr>
+          <tr>
+            <td class="team-name">VOID CAT</td>
+            <td class="team-role">IT Department</td>
+            <td class="team-status">Unknowable</td>
+            <td class="team-note">Has not responded to any emails. Assumed to be fine.</td>
+          </tr>
+          <tr>
+            <td class="team-name">LOLCAT OG</td>
+            <td class="team-role">Senior Advisor</td>
+            <td class="team-status">Retired</td>
+            <td class="team-note">Still asking for cheezburger. Has been since 2007.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="section-label">✦ FREQUENTLY ASKED QUESTIONS ✦</p>
+  <div class="divider">░░░░░░░░░░░░░░░░░░░░</div>
+
+  <div class="content">
+    <div class="faq-list">
+
+      <details>
+        <summary>WHY DOES THIS WEBSITE EXIST?</summary>
+        <p>Genuinely unclear. It started as an HTML practice project and then <strong>it became something more.</strong> Something greater. Something the world was not ready for. Here we are.</p>
+      </details>
+
+      <details>
+        <summary>ARE THE RANKINGS SCIENTIFICALLY ACCURATE?</summary>
+        <p>Absolutely not. They were written based entirely on vibes at an undisclosed hour of the night. The methodology table on the rankings page is <strong>also made up.</strong> Do not cite this in your thesis.</p>
+      </details>
+
+      <details>
+        <summary>CAN I SUBMIT A CAT FOR THE ARCHIVE?</summary>
+        <p>The archive is currently closed to new submissions because <strong>the cats are in a meeting.</strong> Nobody knows what they are discussing. The meeting has been ongoing since 2019. Updates pending.</p>
+      </details>
+
+      <details>
+        <summary>IS GRUMPY CAT ACTUALLY GRUMPY?</summary>
+        <p>Her name was Tardar Sauce and she had feline dwarfism which gave her that expression. In reality she was <strong>reportedly very sweet.</strong> The grumpy was a lie. The memes were real. We mourn accordingly.</p>
+      </details>
+
+      <details>
+        <summary>WHO IS THE TARGET AUDIENCE FOR THIS PAGE?</summary>
+        <p>People who are <strong>chronically online.</strong> People who remember when Nyan Cat was new. People who have at some point sent a cat meme instead of expressing their emotions verbally. You know who you are.</p>
+      </details>
+
+      <details>
+        <summary>WILL THERE BE MORE CATS ADDED?</summary>
+        <p>The cats will decide. <strong>We do not make that call.</strong> We wait. We document. We pixel-font everything. That is our role here.</p>
+      </details>
+
+    </div>
+  </div>
+
+  <p class="section-label">✦ FUN FACTS ABOUT 404CAT ✦</p>
+  <div class="divider">░░░░░░░░░░░░░░░░░░░░</div>
+
+  <div class="content">
+    <div class="facts-box">
+      <h3>THINGS YOU DID NOT NEED TO KNOW:</h3>
+      <ol>
+        <li>This website was built entirely with <strong>HTML and inline CSS.</strong> No frameworks. No libraries. Just chaos and determination.</li>
+        <li>The pixel font is called <strong>VT323.</strong> It was chosen because it looks like a retro computer terminal. The cats approved it.</li>
+        <li>The scanline effect overlaid on every page is a <strong>CSS trick.</strong> It is purely decorative. It makes everything feel more dramatic.</li>
+        <li>The custom paw cursor was made using a <strong>data URI SVG emoji.</strong> You are welcome.</li>
+        <li><strong>Zero cats</strong> were actually consulted during the making of this archive. This is our biggest regret.</li>
+        <li>The colour palette has four colours: <strong>hot pink, electric lime, neon cyan, and yellow.</strong> It is a lot. We stand by it.</li>
+        <li>If you have read this far, <strong>you are one of us now.</strong> There is no going back. The cats have noted your presence.</li>
+      </ol>
+    </div>
+  </div>
+
+  <p class="section-label">✦ SIGN THE GUESTBOOK ✦</p>
+  <div class="divider">░░░░░░░░░░░░░░░░░░░░</div>
+
+  <div class="content">
+    <div class="guestbook">
+      <h3>LEAVE A MESSAGE FOR THE ARCHIVE 🐾</h3>
+      <p class="sub">the cats will read this. grumpy cat will judge it.</p>
+
+      <label for="gb-name">YOUR NAME (or alias):</label>
+      <input type="text" id="gb-name" placeholder="e.g. a person who likes cats" />
+
+      <label for="gb-cat">YOUR SPIRIT CAT:</label>
+      <select id="gb-cat">
+        <option value="">-- choose wisely --</option>
+        <option value="grumpy">Grumpy Cat — I am tired of everything</option>
+        <option value="nyan">Nyan Cat — I am running on chaos</option>
+        <option value="smudge">Smudge — I am offended by something</option>
+        <option value="lolcat">LOLcat OG — I just want snacks</option>
+        <option value="void">Void Cat — I am one with the darkness</option>
+        <option value="loaf">Loaf Cat — I have tucked in all my limbs</option>
+        <option value="keyboard">Keyboard Cat — I perform whether asked or not</option>
+      </select>
+
+      <label for="gb-msg">YOUR MESSAGE TO THE ARCHIVE:</label>
+      <textarea id="gb-msg" placeholder="say something to the cats. they are listening. grumpy cat is already disappointed."></textarea>
+
+      <button class="submit-btn" type="button">SIGN THE GUESTBOOK 🐾</button>
+    </div>
+  </div>
+
+  <div class="final-note" style="margin-top: 50px;">
+    <span class="big">✦ THANK YOU FOR VISITING 404CAT ✦</span>
+    <p>you came. you saw. you read about cats.<br />
+    that is all any of us can really do.<br />
+    the cats appreciate your presence.<br />
+    grumpy cat does not. but that is just her thing.<br /><br />
+    go touch grass. then come back.<br />
+    we will be here. we are always here.</p>
+  </div>
+
+  <footer>
+    <span class="footer-cats">🐱 🐾 🐱 🐾 🐱</span>
+    404cat — the official unhinged cat meme archive<br />
+    made with zero sleep &amp; too much free time<br />
+    <a href="index.html">home</a> &nbsp;✦&nbsp;
+    <a href="gallery.html">gallery</a> &nbsp;✦&nbsp;
+    <a href="rankings.html">rankings</a><br /><br />
+    "no cats were harmed. several humans lost their minds."<br />
+    © 2026 — all rights reserved by the cats. you own nothing.
+  </footer>
+
+</body>
+</html>

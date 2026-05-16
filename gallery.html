@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404cat — Gallery</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:     #08080f;
+      --bg2:    #0f0f1a;
+      --bg3:    #13131f;
+      --pink:   #ff2d78;
+      --lime:   #b6ff00;
+      --cyan:   #00f0ff;
+      --yellow: #ffe600;
+      --white:  #f0e6ff;
+      --pixel:  'Press Start 2P', monospace;
+      --vt:     'VT323', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--white);
+      font-family: var(--vt);
+      font-size: 20px;
+      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text y='28' font-size='28'>🐾</text></svg>") 16 16, auto;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.08) 2px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      background: var(--cyan);
+      padding: 6px 0;
+      border-bottom: 3px solid var(--pink);
+      border-top: 3px solid var(--pink);
+    }
+    .marquee-wrap marquee {
+      font-family: var(--pixel);
+      font-size: 10px;
+      color: #000;
+      letter-spacing: 1px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--bg2);
+      border-bottom: 3px solid var(--cyan);
+      padding: 14px 30px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    nav .logo {
+      font-family: var(--pixel);
+      font-size: 13px;
+      color: var(--pink);
+      text-shadow: 2px 2px 0 var(--lime);
+      text-decoration: none;
+      margin-right: auto;
+    }
+    nav a {
+      font-family: var(--pixel);
+      font-size: 9px;
+      color: var(--cyan);
+      text-decoration: none;
+      border: 2px solid var(--cyan);
+      padding: 6px 12px;
+      transition: all 0.1s;
+    }
+    nav a:hover { background: var(--cyan); color: #000; }
+    nav a.active { background: var(--pink); border-color: var(--pink); color: #000; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      text-align: center;
+      padding: 50px 20px 30px;
+      border-bottom: 3px dashed var(--cyan);
+    }
+    .page-header h1 {
+      font-family: var(--pixel);
+      font-size: clamp(16px, 4vw, 30px);
+      color: var(--cyan);
+      text-shadow: 3px 3px 0 var(--pink), 6px 6px 0 rgba(0,240,255,0.2);
+      line-height: 1.6;
+    }
+    .page-header p {
+      font-family: var(--vt);
+      font-size: 24px;
+      color: var(--lime);
+      margin-top: 14px;
+      letter-spacing: 2px;
+    }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 30px 20px 10px;
+      font-family: var(--pixel);
+      font-size: 8px;
+    }
+    .filter-bar span {
+      color: var(--yellow);
+      align-self: center;
+    }
+    .filter-bar a {
+      color: #000;
+      background: var(--lime);
+      border: 2px solid #000;
+      padding: 6px 12px;
+      text-decoration: none;
+      box-shadow: 3px 3px 0 var(--pink);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .filter-bar a:hover {
+      transform: translate(-2px,-2px);
+      box-shadow: 5px 5px 0 var(--pink);
+    }
+    .filter-bar a.pink { background: var(--pink); color: #fff; box-shadow: 3px 3px 0 var(--lime); }
+    .filter-bar a.cyan { background: var(--cyan); color: #000; box-shadow: 3px 3px 0 var(--yellow); }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-family: var(--pixel);
+      font-size: 10px;
+      color: var(--pink);
+      text-align: center;
+      padding: 36px 20px 6px;
+      letter-spacing: 3px;
+    }
+    .divider {
+      text-align: center;
+      color: var(--lime);
+      font-size: 16px;
+      letter-spacing: 6px;
+      margin: 6px 0 28px;
+    }
+
+    /* ── GALLERY GRID ── */
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      justify-content: center;
+      padding: 0 30px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── CAT CARD ── */
+    .cat-card {
+      background: var(--bg3);
+      width: 240px;
+      border: 3px solid var(--pink);
+      box-shadow: 6px 6px 0 var(--lime);
+      position: relative;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .cat-card:nth-child(2n) { border-color: var(--cyan); box-shadow: 6px 6px 0 var(--pink); }
+    .cat-card:nth-child(3n) { border-color: var(--lime); box-shadow: 6px 6px 0 var(--cyan); }
+    .cat-card:nth-child(4n) { border-color: var(--yellow); box-shadow: 6px 6px 0 var(--lime); }
+    .cat-card:hover { transform: translate(-4px, -4px); box-shadow: 10px 10px 0 var(--pink); }
+
+    .cat-card .number-tag {
+      position: absolute;
+      top: -14px; left: 10px;
+      font-family: var(--pixel);
+      font-size: 7px;
+      background: var(--pink);
+      color: #000;
+      padding: 3px 8px;
+      border: 2px solid #000;
+    }
+    .cat-card:nth-child(2n) .number-tag { background: var(--cyan); }
+    .cat-card:nth-child(3n) .number-tag { background: var(--lime); }
+    .cat-card:nth-child(4n) .number-tag { background: var(--yellow); }
+
+    .cat-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      image-rendering: pixelated;
+      filter: saturate(1.2) contrast(1.05);
+    }
+
+    .cat-card .card-body { padding: 14px; }
+
+    .cat-card .cat-name {
+      font-family: var(--pixel);
+      font-size: 9px;
+      color: var(--lime);
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .cat-card .cat-year {
+      font-family: var(--vt);
+      font-size: 17px;
+      color: var(--cyan);
+      margin-bottom: 6px;
+    }
+
+    .cat-card .cat-quote {
+      font-family: var(--vt);
+      font-size: 18px;
+      color: var(--yellow);
+      font-style: italic;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    /* ── DETAILS / LORE ── */
+    .cat-card details {
+      border-top: 2px dashed var(--pink);
+      padding-top: 10px;
+      margin-top: 4px;
+    }
+    .cat-card details summary {
+      font-family: var(--pixel);
+      font-size: 7px;
+      color: var(--pink);
+      cursor: pointer;
+      letter-spacing: 1px;
+      list-style: none;
+      padding: 4px 0;
+    }
+    .cat-card details summary::before { content: '▶ '; }
+    .cat-card details[open] summary::before { content: '▼ '; }
+    .cat-card details summary:hover { color: var(--lime); }
+    .cat-card details p {
+      font-family: var(--vt);
+      font-size: 17px;
+      color: var(--white);
+      line-height: 1.5;
+      margin-top: 10px;
+      opacity: 0.85;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg2);
+      border-top: 4px solid var(--pink);
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 60px;
+      font-family: var(--pixel);
+      font-size: 8px;
+      color: var(--white);
+      line-height: 2.5;
+    }
+    footer .footer-cats { font-size: 28px; display: block; margin-bottom: 10px; letter-spacing: 6px; }
+    footer a { color: var(--cyan); text-decoration: none; }
+    footer a:hover { color: var(--pink); }
+  </style>
+</head>
+
+<body>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <marquee behavior="scroll" direction="left" scrollamount="7">
+      ✦ WELCOME TO THE GALLERY ✦ SCROLL WITH CAUTION ✦ CATS HAVE BEEN WARNED ✦ LORE UNLOCKED ✦ CLICK THE CARDS ✦ MEOW.EXE RUNNING ✦ GALLERY MODE ACTIVATED 🐾 ✦ WELCOME TO THE GALLERY ✦
+    </marquee>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="logo">🐱 404cat</a>
+    <a href="index.html">HOME</a>
+    <a href="gallery.html" class="active">GALLERY</a>
+    <a href="rankings.html">RANKINGS</a>
+    <a href="about.html">ABOUT</a>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <h1>░▒▓ THE GALLERY ▓▒░</h1>
+    <p>✦ every legend. every lore drop. all in one place. ✦</p>
+  </header>
+
+  <!-- FILTER BAR (decorative, no JS needed) -->
+  <div class="filter-bar">
+    <span>BROWSE BY:</span>
+    <a href="#">ALL CATS</a>
+    <a href="#og" class="pink">OG LEGENDS</a>
+    <a href="#modern" class="cyan">MODERN ERA</a>
+  </div>
+
+  <!-- OG LEGENDS SECTION -->
+  <p class="section-label" id="og">✦ OG LEGENDS — THE FOUNDING CATS ✦</p>
+  <div class="divider">░░░░░░░░░░░░░░░░░░░░</div>
+
+  <div class="gallery">
+
+    <div class="cat-card">
+      <span class="number-tag">CAT #001</span>
+      <img src="images/grumpycat2.jpg" alt="Grumpy Cat" />
+      <div class="card-body">
+        <p class="cat-name">GRUMPY CAT</p>
+        <p class="cat-year">📅 viral: 2012</p>
+        <p class="cat-quote">"I had fun once. It was awful."</p>
+        <details>
+          <summary>UNLOCK LORE</summary>
+          <p>Real name: Tardar Sauce. Born with feline dwarfism giving her a permanently grumpy face. Did not choose the grump life. Passed away 2019 but her disappointment lives on in all of us on Monday mornings.</p>
+        </details>
+      </div>
+    </div>
+
+    <div class="cat-card">
+      <span class="number-tag">CAT #002</span>
+      <img src="images/nyancat2.jpg" alt="Nyan Cat" />
+      <div class="card-body">
+        <p class="cat-name">NYAN CAT</p>
+        <p class="cat-year">📅 viral: 2011</p>
+        <p class="cat-quote">"nyanyanyanyanyanya"</p>
+        <details>
+          <summary>UNLOCK LORE</summary>
+          <p>A pop-tart cat flying through space leaving a rainbow trail. Created by Chris Torres. Sold as an NFT for $590,000. The internet is a place. There is no deeper meaning. Or maybe there is. We don't know.</p>
+        </details>
+      </div>
+    </div>
+
+    <div class="cat-card">
+      <span class="number-tag">CAT #003</span>
+      <img src="images/lolcatog2.jpg" alt="LOLcat" />
+      <div class="card-body">
+        <p class="cat-name">LOLCAT OG</p>
+        <p class="cat-year">📅 viral: 2007</p>
+        <p class="cat-quote">"i can haz cheezburger?"</p>
+        <details>
+          <summary>UNLOCK LORE</summary>
+          <p>The founding father. The original. Before memes were memes, there was LOLcat. The broken grammar was intentional. It started a whole language. Still waiting for that cheezburger since 2007.</p>
+        </details>
+      </div>
+    </div>
+
+    <div class="cat-card">
+      <span class="number-tag">CAT #004</span>
+      <img src="images/keyboard.jpg" alt="Keyboard Cat" />
+      <div class="card-body">
+        <p class="cat-name">KEYBOARD CAT</p>
+        <p class="cat-year">📅 viral: 2009</p>
+        <p class="cat-quote">"*plays you off*"</p>
+        <details>
+          <summary>UNLOCK LORE</summary>
+          <p>Originally filmed in 1984. Posted to YouTube in 2007. Used to play people off after fails. A musical genius with no formal training. The original reaction meme. Wore a tiny shirt. Iconic.</p>
+        </details>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODERN ERA SECTION -->
+  <p class="section-label" id="modern">✦ MODERN ERA — THE NEW LEGENDS ✦</p>
+  <div class="divider">░░░░░░░░░░░░░░░░░░░░</div>
+
+  <div class="gallery">
+
+    <div class="cat-card">
+      <span class="number-tag">CAT #005</span>
+      <img src="images/smudgecat2.jpg" alt="Smudge" />
+      <div class="card-body">
+        <p class="cat-name">SMUDGE</p>
+        <p class="cat-year">📅 viral: 2019</p>
+        <p class="cat-quote">"that is NOT a salad."</p>
+        <details>
+          <summary>UNLOCK LORE</summary>
+          <p>Someone put Smudge in front of a salad for a photo. He was not happy about it. Combined with a screaming woman from Real Housewives, it became the woman yelling at cat meme. The salad knows what it did.</p>
+        </details>
+      </div>
+    </div>
+
+    <div class="cat-card">
+      <span class="number-tag">CAT #006</span>
+      <img src="images/voidcat.jpg" alt="Black Cat" />
+      <div class="card-body">
+        <p class="cat-name">VOID CAT</p>
+        <p class="cat-year">📅 viral: 2020</p>
+        <p class="cat-quote">"I am the void. I am within you."</p>
+        <details>
+          <summary>UNLOCK LORE</summary>
+          <p>Black cats on the internet achieved sentience around 2020. Collectively known as void cats. They stare. They judge. They knock things off tables. They are one with the darkness. We respect this.</p>
+        </details>
+      </div>
+    </div>
+
+    <div class="cat-card">
+      <span class="number-tag">CAT #007</span>
+      <img src="images/loaf.jpg" alt="Loaf Cat" />
+      <div class="card-body">
+        <p class="cat-name">LOAF CAT</p>
+        <p class="cat-year">📅 viral: 2016</p>
+        <p class="cat-quote">"I have no limbs and I must loaf."</p>
+        <details>
+          <summary>UNLOCK LORE</summary>
+          <p>When a cat tucks all four limbs under its body, it becomes a loaf. A perfect rectangle. A bread unit. Scientists have studied this. No useful conclusions were reached. The loaf remains a mystery.</p>
+        </details>
+      </div>
+    </div>
+
+    <div class="cat-card">
+      <span class="number-tag">CAT #008</span>
+      <img src="images/judgementalcat.jpg" alt="Staring Cat" />
+      <div class="card-body">
+        <p class="cat-name">JUDGEMENTAL CAT</p>
+        <p class="cat-year">📅 viral: 2021</p>
+        <p class="cat-quote">"I have seen your browser history."</p>
+        <details>
+          <summary>UNLOCK LORE</summary>
+          <p>This cat knows everything. Every bad decision you have made. Every 3am purchase. Every text you sent and regretted. It stares. It judges. It says nothing. It does not need to.</p>
+        </details>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-cats">🐱 🐾 🐱 🐾 🐱</span>
+    404cat — the official unhinged cat meme archive<br />
+    made with zero sleep &amp; too much free time<br />
+    <a href="index.html">home</a> &nbsp;✦&nbsp;
+    <a href="rankings.html">rankings</a> &nbsp;✦&nbsp;
+    <a href="about.html">about</a><br /><br />
+    "no cats were harmed. several humans lost their minds."<br />
+    © 2026 — all rights reserved by the cats. you own nothing.
+  </footer>
+
+</body>
+</html>

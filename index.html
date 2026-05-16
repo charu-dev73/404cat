@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404cat — Hall of Legends</title>
+
+  <!-- Pixel & retro fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── ROOT VARIABLES ── */
+    :root {
+      --bg:        #08080f;
+      --bg2:       #0f0f1a;
+      --pink:      #ff2d78;
+      --lime:      #b6ff00;
+      --cyan:      #00f0ff;
+      --yellow:    #ffe600;
+      --white:     #f0e6ff;
+      --pixel:     'Press Start 2P', monospace;
+      --vt:        'VT323', monospace;
+    }
+
+    /* ── RESET & BASE ── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--white);
+      font-family: var(--vt);
+      font-size: 20px;
+      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text y='28' font-size='28'>🐾</text></svg>") 16 16, auto;
+    }
+
+    /* ── SCANLINE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.08) 2px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      background: var(--pink);
+      padding: 6px 0;
+      border-bottom: 3px solid var(--lime);
+      border-top: 3px solid var(--lime);
+    }
+    .marquee-wrap marquee {
+      font-family: var(--pixel);
+      font-size: 10px;
+      color: #000;
+      letter-spacing: 1px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--bg2);
+      border-bottom: 3px solid var(--cyan);
+      padding: 14px 30px;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    nav .logo {
+      font-family: var(--pixel);
+      font-size: 13px;
+      color: var(--pink);
+      text-shadow: 2px 2px 0 var(--lime);
+      text-decoration: none;
+      margin-right: auto;
+    }
+    nav a {
+      font-family: var(--pixel);
+      font-size: 9px;
+      color: var(--cyan);
+      text-decoration: none;
+      border: 2px solid var(--cyan);
+      padding: 6px 12px;
+      transition: all 0.1s;
+    }
+    nav a:hover {
+      background: var(--cyan);
+      color: #000;
+    }
+    nav a.active {
+      background: var(--pink);
+      border-color: var(--pink);
+      color: #000;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 60px 20px 40px;
+      border-bottom: 3px dashed var(--pink);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '🐱';
+      font-size: 200px;
+      position: absolute;
+      right: -30px;
+      top: -20px;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+    .hero h1 {
+      font-family: var(--pixel);
+      font-size: clamp(22px, 5vw, 42px);
+      color: var(--pink);
+      text-shadow:
+        3px 3px 0 var(--lime),
+        6px 6px 0 rgba(255,45,120,0.3);
+      line-height: 1.4;
+      animation: glitch 4s infinite;
+    }
+    @keyframes glitch {
+      0%, 90%, 100% { transform: translate(0); }
+      91% { transform: translate(-3px, 1px); color: var(--cyan); }
+      93% { transform: translate(3px, -1px); color: var(--lime); }
+      95% { transform: translate(0); color: var(--pink); }
+    }
+    .hero .subtitle {
+      font-family: var(--vt);
+      font-size: 26px;
+      color: var(--lime);
+      margin-top: 16px;
+      letter-spacing: 2px;
+    }
+    .hero .badge {
+      display: inline-block;
+      margin-top: 20px;
+      font-family: var(--pixel);
+      font-size: 8px;
+      background: var(--yellow);
+      color: #000;
+      padding: 6px 14px;
+      border: 3px solid #000;
+      box-shadow: 4px 4px 0 var(--pink);
+      animation: blink 1.5s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-family: var(--pixel);
+      font-size: 13px;
+      color: var(--lime);
+      text-align: center;
+      padding: 40px 20px 10px;
+      letter-spacing: 2px;
+    }
+    .section-title span {
+      display: block;
+      font-family: var(--vt);
+      font-size: 20px;
+      color: var(--white);
+      opacity: 0.6;
+      margin-top: 6px;
+      font-weight: normal;
+      letter-spacing: 1px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      text-align: center;
+      color: var(--pink);
+      font-size: 18px;
+      letter-spacing: 4px;
+      margin: 10px 0 30px;
+    }
+
+    /* ── GALLERY ── */
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+      padding: 10px 30px 50px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    figure {
+      background: var(--bg2);
+      border: 3px solid var(--pink);
+      box-shadow: 6px 6px 0 var(--lime);
+      width: 220px;
+      text-align: center;
+      padding: 12px;
+      transition: transform 0.15s, box-shadow 0.15s;
+      position: relative;
+    }
+    figure:nth-child(2n) {
+      border-color: var(--cyan);
+      box-shadow: 6px 6px 0 var(--pink);
+    }
+    figure:nth-child(3n) {
+      border-color: var(--lime);
+      box-shadow: 6px 6px 0 var(--cyan);
+    }
+    figure:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 9px 9px 0 var(--lime);
+    }
+    figure .tag {
+      position: absolute;
+      top: -14px;
+      left: 10px;
+      background: var(--pink);
+      color: #000;
+      font-family: var(--pixel);
+      font-size: 7px;
+      padding: 3px 8px;
+      border: 2px solid #000;
+    }
+    figure:nth-child(2n) .tag { background: var(--cyan); }
+    figure:nth-child(3n) .tag { background: var(--lime); }
+    figure img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+      image-rendering: pixelated;
+      filter: saturate(1.2) contrast(1.05);
+    }
+    figcaption {
+      margin-top: 10px;
+      font-family: var(--vt);
+      font-size: 18px;
+      color: var(--white);
+      line-height: 1.4;
+    }
+    figcaption strong {
+      display: block;
+      color: var(--lime);
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+    figcaption em {
+      color: var(--yellow);
+      font-style: normal;
+      font-size: 16px;
+    }
+
+    /* ── PIXEL FOOTER ── */
+    footer {
+      background: var(--bg2);
+      border-top: 4px solid var(--pink);
+      text-align: center;
+      padding: 30px 20px;
+      font-family: var(--pixel);
+      font-size: 8px;
+      color: var(--white);
+      line-height: 2.5;
+    }
+    footer .footer-cats {
+      font-size: 28px;
+      display: block;
+      margin-bottom: 10px;
+      letter-spacing: 6px;
+    }
+    footer a {
+      color: var(--cyan);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--pink); }
+  </style>
+</head>
+
+<body>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <marquee behavior="scroll" direction="left" scrollamount="6">
+      ⚠ THIS PAGE IS CERTIFIED UNHINGED &nbsp;✦&nbsp; THE CATS ARE IN CHARGE &nbsp;✦&nbsp; NO REFUNDS &nbsp;✦&nbsp; EST. 2024 &nbsp;✦&nbsp; PAGE NOT FOUND BUT THE CATS WERE &nbsp;✦&nbsp; 🐾 MEOW.EXE HAS STOPPED WORKING &nbsp;✦&nbsp; ⚠ THIS PAGE IS CERTIFIED UNHINGED &nbsp;✦&nbsp;
+    </marquee>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="logo">🐱 404cat</a>
+    <a href="index.html" class="active">HOME</a>
+    <a href="gallery.html">GALLERY</a>
+    <a href="rankings.html">RANKINGS</a>
+    <a href="about.html">ABOUT</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>THE OFFICIAL<br />UNHINGED CAT<br />MEME ARCHIVE</h1>
+    <p class="subtitle">✦ nobody asked. we did it anyway. ✦</p>
+    <span class="badge">⚠ EST. 2024 — STILL LOADING ⚠</span>
+  </section>
+
+  <!-- HALL OF LEGENDS -->
+  <h2 class="section-title">
+    ░▒▓ HALL OF LEGENDS ▓▒░
+    <span>these cats did not ask for fame. fame found them anyway.</span>
+  </h2>
+  <div class="divider">✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦</div>
+
+  <div class="gallery">
+
+    <figure>
+      <span class="tag">LEGEND #01</span>
+      <img
+        src="images/grumpycat.jpg"
+        alt="Grumpy Cat" />
+      <figcaption>
+        <strong>Grumpy Cat</strong>
+        <em>"I had fun once. It was awful."</em>
+      </figcaption>
+    </figure>
+
+    <figure>
+      <span class="tag">LEGEND #02</span>
+      <img
+        src="images/nyancat.jpg"
+        alt="Nyan Cat" />
+      <figcaption>
+        <strong>Nyan Cat</strong>
+        <em>"living my best life at 200mph"</em>
+      </figcaption>
+    </figure>
+
+    <figure>
+      <span class="tag">LEGEND #03</span>
+      <img
+        src="images/smudgecat.jpg"
+        alt="Smudge" />
+      <figcaption>
+        <strong>Smudge</strong>
+        <em>"that is NOT a salad."</em>
+      </figcaption>
+    </figure>
+
+    <figure>
+      <span class="tag">LEGEND #04</span>
+      <img
+        src="images/lolcatog.jpg"
+        alt="LOLcat" />
+      <figcaption>
+        <strong>LOLcat OG</strong>
+        <em>"i can haz cheezburger?"</em>
+      </figcaption>
+    </figure>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-cats">🐱 🐾 🐱 🐾 🐱</span>
+    404cat — the official unhinged cat meme archive<br />
+    made with zero sleep &amp; too much free time<br />
+    <a href="gallery.html">gallery</a> &nbsp;✦&nbsp;
+    <a href="rankings.html">rankings</a> &nbsp;✦&nbsp;
+    <a href="about.html">about</a><br /><br />
+    "no cats were harmed. several humans lost their minds."<br />
+    © 2026 — all rights reserved by the cats. you own nothing.
+  </footer>
+
+</body>
+</html>
